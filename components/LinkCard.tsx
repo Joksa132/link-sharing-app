@@ -6,6 +6,7 @@ import { FaGithub, FaYoutube, FaLinkedin, FaLink } from "react-icons/fa";
 
 type LinkCardProps = {
   linkNumber: number;
+  handleRemoveLink: (linkNumber: number) => void;
 };
 
 const options = [
@@ -35,9 +36,12 @@ const options = [
   },
 ];
 
-export default function LinkCard({ linkNumber }: LinkCardProps) {
+export default function LinkCard({
+  linkNumber,
+  handleRemoveLink,
+}: LinkCardProps) {
   return (
-    <div className="bg-[#FAFAFA] p-4 flex flex-col gap-3">
+    <div className="bg-[#FAFAFA] p-4 flex flex-col gap-3 rounded-lg">
       <div className="flex justify-between ">
         <div className="flex gap-1 items-center">
           <HiOutlineMenuAlt4 className="text-gray-500" />
@@ -45,7 +49,10 @@ export default function LinkCard({ linkNumber }: LinkCardProps) {
             Link #{linkNumber}
           </span>
         </div>
-        <button className="font-medium text-gray-500 text-opacity-80">
+        <button
+          className="font-medium text-gray-500 text-opacity-80"
+          onClick={() => handleRemoveLink(linkNumber)}
+        >
           Remove
         </button>
       </div>
