@@ -3,10 +3,11 @@
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import Select from "react-select";
 import { FaGithub, FaYoutube, FaLinkedin, FaLink } from "react-icons/fa";
+import { useId } from "react";
 
 type LinkCardProps = {
   linkNumber: number;
-  handleRemoveLink: (linkNumber: number) => void;
+  handleRemoveLink: () => void;
 };
 
 const options = [
@@ -40,6 +41,7 @@ export default function LinkCard({
   linkNumber,
   handleRemoveLink,
 }: LinkCardProps) {
+  const id = useId();
   return (
     <div className="bg-[#FAFAFA] p-4 flex flex-col gap-3 rounded-lg">
       <div className="flex justify-between ">
@@ -51,19 +53,16 @@ export default function LinkCard({
         </div>
         <button
           className="font-medium text-gray-500 text-opacity-80"
-          onClick={() => handleRemoveLink(linkNumber)}
+          onClick={handleRemoveLink}
         >
           Remove
         </button>
       </div>
       <div className="flex flex-col gap-1">
-        <label
-          htmlFor="link-platform"
-          className="text-xs text-gray-500 font-medium"
-        >
+        <label htmlFor={id} className="text-xs text-gray-500 font-medium">
           Platform
         </label>
-        <Select options={options} />
+        <Select options={options} instanceId={id} inputId={id} />
       </div>
       <div className="flex flex-col gap-1">
         <label htmlFor="link-url" className="text-xs text-gray-500 font-medium">
