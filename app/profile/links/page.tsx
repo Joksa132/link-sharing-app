@@ -4,8 +4,42 @@ import LinkCard from "@/components/LinkCard";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
+type Link = {
+  platform: string;
+  url: string;
+  number: number;
+  id: number;
+};
+
 export default function ProfileLinks() {
-  const [linksNumber, setLinksNumber] = useState<number[]>([1]);
+  const [links, setLinks] = useState<Link[]>([
+    {
+      platform: "",
+      url: "",
+      number: 1,
+      id: 1,
+    },
+  ]);
+
+  const handleAddLink = () => {
+    setLinks((prevLinks) => [
+      ...prevLinks,
+      {
+        platform: "",
+        url: "",
+        number: links.length + 1,
+        id: (prevLinks[prevLinks.length - 1].id || 0) + 1,
+      },
+    ]);
+  };
+
+  const handleRemoveLink = (linkId: number) => {
+    setLinks(
+      links.filter((link) => {
+        return link.id !== linkId;
+      })
+    );
+  };
 
   return (
     <main className="grid grid-cols-links gap-5 py-5">
@@ -19,22 +53,21 @@ export default function ProfileLinks() {
           </span>
           <button
             className="flex justify-center items-center gap-1 py-3 px-6 border-[2px] border-violet-500 rounded-lg text-violet-500 font-bold text-lg mt-6 mb-4"
-            onClick={() =>
-              setLinksNumber((prevNumber) => [
-                ...prevNumber,
-                prevNumber.length + 1,
-              ])
-            }
+            onClick={handleAddLink}
           >
             <FaPlus size={10} /> Add new link
           </button>
           <div
             className={`flex flex-col gap-6 max-h-[440px] ${
-              linksNumber.length > 2 ? "overflow-y-scroll" : ""
+              links.length > 2 ? "overflow-y-scroll" : ""
             }`}
           >
-            {linksNumber.map((linkNumber) => (
-              <LinkCard linkNumber={linkNumber} key={linkNumber} />
+            {links.map((link) => (
+              <LinkCard
+                linkNumber={links.indexOf(link) + 1}
+                key={link.id}
+                handleRemoveLink={() => handleRemoveLink(link.id)}
+              />
             ))}
           </div>
         </div>
