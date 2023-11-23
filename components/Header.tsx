@@ -7,8 +7,6 @@ import { FaLink, FaRegUserCircle } from "react-icons/fa";
 export default function Header() {
   const pathName = usePathname();
 
-  console.log(pathName);
-
   return (
     <header className="flex justify-between items-center p-2 bg-white rounded-lg">
       <div>Logo</div>

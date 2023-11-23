@@ -6,7 +6,7 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="p-4">
+    <div className="p-5">
       <Header />
       {children}
     </div>
