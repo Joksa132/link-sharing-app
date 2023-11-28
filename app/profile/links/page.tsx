@@ -1,49 +1,20 @@
 "use client";
 
 import LinkCard from "@/components/LinkCard";
-import { useState } from "react";
+import PhonePreview from "@/components/PhonePreview";
 import { FaPlus } from "react-icons/fa";
-
-type Link = {
-  platform: string;
-  url: string;
-  number: number;
-  id: number;
-};
+import { useContext } from "react";
+import { ProfileContext } from "@/components/context/ProfileContext";
 
 export default function ProfileLinks() {
-  const [links, setLinks] = useState<Link[]>([
-    {
-      platform: "",
-      url: "",
-      number: 1,
-      id: 1,
-    },
-  ]);
-
-  const handleAddLink = () => {
-    setLinks((prevLinks) => [
-      ...prevLinks,
-      {
-        platform: "",
-        url: "",
-        number: links.length + 1,
-        id: (prevLinks[prevLinks.length - 1].id || 0) + 1,
-      },
-    ]);
-  };
-
-  const handleRemoveLink = (linkId: number) => {
-    setLinks(
-      links.filter((link) => {
-        return link.id !== linkId;
-      })
-    );
-  };
+  const { links, handleAddLink, handleRemoveLink, profileDetails } =
+    useContext(ProfileContext);
 
   return (
     <main className="grid grid-cols-links gap-5 py-5">
-      <section className="bg-white rounded-lg h-full"></section>
+      <section className="bg-white rounded-lg h-full flex justify-center items-center p-6">
+        <PhonePreview links={links} profile={profileDetails} />
+      </section>
       <section className="bg-white rounded-lg flex flex-col h-full">
         <div className="h-full px-8 py-10 flex flex-col gap-2">
           <h2 className="text-3xl font-bold">Customize your links</h2>
