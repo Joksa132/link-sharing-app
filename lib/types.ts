@@ -14,4 +14,5 @@ export type Link = {
 
 export type ProfilePreview = {
   links: Link[];
-} & ProfileDetails;
+  profile: ProfileDetails;
+};
