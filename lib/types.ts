@@ -11,3 +11,7 @@ export type Link = {
   number: number;
   id: number;
 };
+
+export type ProfilePreview = {
+  links: Link[];
+} & ProfileDetails;
