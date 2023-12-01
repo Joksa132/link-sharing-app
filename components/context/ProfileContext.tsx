@@ -1,10 +1,11 @@
 "use client";
 
 import { Link, ProfileDetails } from "@/lib/types";
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 
 type ProfileContext = {
   links: Link[];
+  setLinks: React.Dispatch<React.SetStateAction<Link[]>>;
   profileDetails: ProfileDetails;
   setProfileDetails: React.Dispatch<React.SetStateAction<ProfileDetails>>;
   handleAddLink: () => void;
@@ -55,6 +56,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     <ProfileContext.Provider
       value={{
         links,
+        setLinks,
         handleAddLink,
         handleRemoveLink,
         profileDetails,
