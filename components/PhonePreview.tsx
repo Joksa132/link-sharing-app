@@ -6,7 +6,6 @@ import {
   NameSkeleton,
 } from "./skeletons";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function PhonePreview({ links, profile }: ProfilePreview) {
   const fullName = `${profile.firstName} ${profile.lastName}`;
@@ -44,9 +43,9 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
         {profile.email ? <span>{profile.email}</span> : <EmailSkeleton />}
         {links[0].url ? (
           links.map((link) => (
-            <Link href={link.url} key={link?.id}>
+            <a href={link.url} key={link?.id} target="_blank">
               {link.platform}
-            </Link>
+            </a>
           ))
         ) : (
           <LinkSkeleton />
