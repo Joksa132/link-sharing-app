@@ -37,6 +37,7 @@ export default function ProfileLinks() {
               <LinkCard
                 linkNumber={links.indexOf(link) + 1}
                 key={link.id}
+                linkId={link.id}
                 handleRemoveLink={() => handleRemoveLink(link.id)}
               />
             ))}
