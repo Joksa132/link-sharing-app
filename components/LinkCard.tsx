@@ -1,47 +1,46 @@
 "use client";
 
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-import Select from "react-select";
 import { FaGithub, FaYoutube, FaLinkedin, FaLink } from "react-icons/fa";
-import { useId } from "react";
+import { useId, useContext } from "react";
+import { ProfileContext } from "./context/ProfileContext";
 
 type LinkCardProps = {
   linkNumber: number;
+  linkId: number;
   handleRemoveLink: () => void;
 };
 
-const options = [
-  {
-    value: "github",
-    label: (
-      <div className="flex items-center gap-3">
-        <FaGithub /> GitHub
-      </div>
-    ),
-  },
-  {
-    value: "youtube",
-    label: (
-      <div className="flex items-center gap-3">
-        <FaYoutube /> YouTube
-      </div>
-    ),
-  },
-  {
-    value: "Linkedin",
-    label: (
-      <div className="flex items-center gap-3">
-        <FaLinkedin /> Linkedin
-      </div>
-    ),
-  },
-];
-
 export default function LinkCard({
   linkNumber,
+  linkId,
   handleRemoveLink,
 }: LinkCardProps) {
   const id = useId();
+  const { links, setLinks } = useContext(ProfileContext);
+
+  const handlePlatformChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    const linkIndex = links.findIndex((link) => link.id === linkId);
+
+    if (linkIndex !== -1) {
+      const updatedLinks = [...links];
+      updatedLinks[linkIndex].platform = (e.target as HTMLSelectElement).value;
+
+      setLinks(updatedLinks);
+    }
+  };
+
+  const handleUrlChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const linkIndex = links.findIndex((link) => link.id === linkId);
+
+    if (linkIndex !== -1) {
+      const updatedLinks = [...links];
+      updatedLinks[linkIndex].url = (e.target as HTMLInputElement).value;
+
+      setLinks(updatedLinks);
+    }
+  };
+
   return (
     <div className="bg-[#FAFAFA] p-4 flex flex-col gap-3 rounded-lg">
       <div className="flex justify-between ">
@@ -59,21 +58,38 @@ export default function LinkCard({
         </button>
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor={id} className="text-xs text-gray-500 font-medium">
+        <label
+          htmlFor={`select-${id}`}
+          className="text-xs text-gray-500 font-medium"
+        >
           Platform
         </label>
-        <Select options={options} instanceId={id} inputId={id} />
+        <select
+          name="platform"
+          id={`select-${id}`}
+          onChange={handlePlatformChange}
+          className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
+        >
+          <option value="">Select a platform</option>
+          <option value="GitHub">GitHub</option>
+          <option value="YouTube">YouTube</option>
+          <option value="Linkedin">Linkedin</option>
+        </select>
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="link-url" className="text-xs text-gray-500 font-medium">
+        <label
+          htmlFor={`input-${id}`}
+          className="text-xs text-gray-500 font-medium"
+        >
           Link
         </label>
         <div className="relative">
           <input
             type="text"
             name="link-url"
-            id="link-url"
+            id={`input-${id}`}
             className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
+            onChange={handleUrlChange}
           />
           <FaLink
             size={14}
