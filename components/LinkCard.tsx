@@ -18,10 +18,9 @@ export default function LinkCard({
 }: LinkCardProps) {
   const id = useId();
   const { links, setLinks } = useContext(ProfileContext);
+  const linkIndex = links.findIndex((link) => link.id === linkId);
 
   const handlePlatformChange = (e: React.FormEvent<HTMLSelectElement>) => {
-    const linkIndex = links.findIndex((link) => link.id === linkId);
-
     if (linkIndex !== -1) {
       const updatedLinks = [...links];
       updatedLinks[linkIndex].platform = (e.target as HTMLSelectElement).value;
@@ -31,8 +30,6 @@ export default function LinkCard({
   };
 
   const handleUrlChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const linkIndex = links.findIndex((link) => link.id === linkId);
-
     if (linkIndex !== -1) {
       const updatedLinks = [...links];
       updatedLinks[linkIndex].url = (e.target as HTMLInputElement).value;
@@ -69,6 +66,7 @@ export default function LinkCard({
           id={`select-${id}`}
           onChange={handlePlatformChange}
           className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
+          value={links[linkIndex].platform}
         >
           <option value="">Select a platform</option>
           <option value="GitHub">GitHub</option>
@@ -93,6 +91,7 @@ export default function LinkCard({
             id={`input-${id}`}
             className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
             onChange={handleUrlChange}
+            value={links[linkIndex].url}
           />
           <FaLink
             size={14}
