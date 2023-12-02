@@ -39,7 +39,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
         platform: "",
         url: "",
         number: links.length + 1,
-        id: (prevLinks[prevLinks.length - 1].id || 0) + 1,
+        id: (prevLinks.length > 0 ? prevLinks[prevLinks.length - 1].id : 0) + 1,
       },
     ]);
   };
