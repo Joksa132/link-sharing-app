@@ -6,7 +6,9 @@ import {
   NameSkeleton,
 } from "./skeletons";
 import Image from "next/image";
-import { getButtonColor } from "@/utils/getPlatformColor";
+import { getButtonColor } from "@/utils/getButtonColor";
+import { FaArrowRight } from "react-icons/fa6";
+import { getButtonIcon } from "@/utils/getButtonIcon";
 
 export default function PhonePreview({ links, profile }: ProfilePreview) {
   const fullName = `${profile.firstName} ${profile.lastName}`;
@@ -42,17 +44,21 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
         )}
         {fullName.trim() ? <span>{fullName}</span> : <NameSkeleton />}
         {profile.email ? <span>{profile.email}</span> : <EmailSkeleton />}
-        {links[0].url ? (
+        {links[0] && links[0].url ? (
           links.map((link) => (
             <a
               href={`//${link.url}`}
               key={link.id}
               target="_blank"
-              className={`h-8 w-44 rounded-lg flex justify-center items-center ${getButtonColor(
+              className={`w-48 p-2 rounded-lg flex justify-between items-center font-medium ${getButtonColor(
                 link.platform
               )}`}
             >
-              {link.platform}
+              <div className="flex gap-2 items-center">
+                {getButtonIcon(link.platform)}
+                {link.platform}
+              </div>
+              <FaArrowRight />
             </a>
           ))
         ) : (
