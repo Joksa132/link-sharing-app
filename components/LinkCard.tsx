@@ -1,7 +1,7 @@
 "use client";
 
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-import { FaGithub, FaYoutube, FaLinkedin, FaLink } from "react-icons/fa";
+import { FaLink } from "react-icons/fa";
 import { useId, useContext } from "react";
 import { ProfileContext } from "./context/ProfileContext";
 
@@ -74,6 +74,9 @@ export default function LinkCard({
           <option value="GitHub">GitHub</option>
           <option value="YouTube">YouTube</option>
           <option value="Linkedin">Linkedin</option>
+          <option value="Twitter">Twitter</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Instagram">Instagram</option>
         </select>
       </div>
       <div className="flex flex-col gap-1">
