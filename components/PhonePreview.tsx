@@ -6,6 +6,7 @@ import {
   NameSkeleton,
 } from "./skeletons";
 import Image from "next/image";
+import { getButtonColor } from "@/utils/getPlatformColor";
 
 export default function PhonePreview({ links, profile }: ProfilePreview) {
   const fullName = `${profile.firstName} ${profile.lastName}`;
@@ -43,7 +44,14 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
         {profile.email ? <span>{profile.email}</span> : <EmailSkeleton />}
         {links[0].url ? (
           links.map((link) => (
-            <a href={link.url} key={link?.id} target="_blank">
+            <a
+              href={`//${link.url}`}
+              key={link.id}
+              target="_blank"
+              className={`h-8 w-44 rounded-lg flex justify-center items-center ${getButtonColor(
+                link.platform
+              )}`}
+            >
               {link.platform}
             </a>
           ))
