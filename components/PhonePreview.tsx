@@ -32,7 +32,7 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
           d="M12 55.5C12 30.923 31.923 11 56.5 11h24C86.851 11 92 16.149 92 22.5c0 8.008 6.492 14.5 14.5 14.5h95c8.008 0 14.5-6.492 14.5-14.5 0-6.351 5.149-11.5 11.5-11.5h24c24.577 0 44.5 19.923 44.5 44.5v521c0 24.577-19.923 44.5-44.5 44.5h-195C31.923 621 12 601.077 12 576.5v-521Z"
         />
       </svg>
-      <div className="absolute top-14 flex flex-col items-center gap-4">
+      <div className="absolute top-14 flex flex-col items-center gap-2">
         {profile.avatar ? (
           <Image
             className="h-20 w-20 rounded-full"
@@ -42,8 +42,18 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
         ) : (
           <AvatarSkeleton />
         )}
-        {fullName.trim() ? <span>{fullName}</span> : <NameSkeleton />}
-        {profile.email ? <span>{profile.email}</span> : <EmailSkeleton />}
+        {fullName.trim() ? (
+          <span className="text-xl font-semibold mt-2">{fullName}</span>
+        ) : (
+          <NameSkeleton />
+        )}
+        {profile.email ? (
+          <span className="text-sm font-medium opacity-50 mb-6">
+            {profile.email}
+          </span>
+        ) : (
+          <EmailSkeleton />
+        )}
         {links[0] && links[0].url ? (
           links.map((link) => (
             <a
