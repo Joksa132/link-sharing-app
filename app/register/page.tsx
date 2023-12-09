@@ -1,8 +1,15 @@
+"use client";
+
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdLock } from "react-icons/io";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Register() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen">
       <div>logo</div>
@@ -10,7 +17,7 @@ export default function Register() {
         <div className="flex flex-col gap-2">
           <h2 className="text-3xl font-bold">Create account</h2>
           <span className="text-sm font-medium opacity-50">
-            Let's get you started sharing your links!
+            {"Let's get you started sharing your links!"}
           </span>
         </div>
         <div className="flex flex-col mt-6">
@@ -28,6 +35,8 @@ export default function Register() {
               required
               className="p-2 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full px-10"
               placeholder="e.g. alex@email.com"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
             <MdOutlineEmail className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
           </div>
@@ -47,6 +56,8 @@ export default function Register() {
               required
               className="p-2 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full px-10"
               placeholder="At least 8 characters"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
             <IoMdLock className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
           </div>
@@ -66,6 +77,8 @@ export default function Register() {
               required
               className="p-2 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full px-10"
               placeholder="At least 8 characters"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
             />
             <IoMdLock className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
           </div>

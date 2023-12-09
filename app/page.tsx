@@ -55,7 +55,7 @@ export default function Home() {
           Log in
         </button>
         <span className="text-center text-sm mt-2">
-          Don't have an account?{" "}
+          {"Don't have an account?"}
           <Link href="/register" className="text-sky-500">
             Create account
           </Link>
