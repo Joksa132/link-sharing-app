@@ -42,6 +42,8 @@ export default function LoginForm() {
 
       if (!response?.error) {
         router.push("/profile/links");
+      } else {
+        setErrors({ login: "Invalid email or password" });
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -109,6 +111,9 @@ export default function LoginForm() {
       </div>
       {errors.password && (
         <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+      )}
+      {errors.login && (
+        <p className="text-red-500 text-xs mt-1">{errors.login}</p>
       )}
       <button className="bg-[#633CFF] text-zinc-200 py-3 rounded-lg font-semibold mt-1">
         Log in
