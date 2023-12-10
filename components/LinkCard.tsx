@@ -92,6 +92,7 @@ export default function LinkCard({
             className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
             onChange={handleUrlChange}
             value={links[linkIndex].url}
+            required
           />
           <FaLink
             size={14}
