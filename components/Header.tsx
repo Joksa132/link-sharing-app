@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaLink, FaRegUserCircle } from "react-icons/fa";
@@ -9,7 +10,9 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center p-2 bg-white rounded-lg">
-      <div>Logo</div>
+      <button className="text-gray-600 font-semibold" onClick={() => signOut()}>
+        Logout
+      </button>
       <div className="flex gap-6">
         <Link
           href="/profile/links"
