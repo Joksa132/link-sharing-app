@@ -6,9 +6,27 @@ import {
   NameSkeleton,
 } from "./skeletons";
 import Image from "next/image";
-import { getButtonColor } from "@/utils/getButtonColor";
 import { FaArrowRight } from "react-icons/fa6";
 import { getButtonIcon } from "@/utils/getButtonIcon";
+
+const getButtonColor = (platform: string) => {
+  switch (platform.toLowerCase()) {
+    case "github":
+      return "bg-black text-white";
+    case "youtube":
+      return "bg-red-500 text-white";
+    case "linkedin":
+      return "bg-blue-600 text-white";
+    case "twitter":
+      return "bg-sky-400 text-white";
+    case "facebook":
+      return "bg-blue-400 text-white";
+    case "instagram":
+      return "bg-violet-500 text-white";
+    default:
+      return "bg-gray-500 text-white";
+  }
+};
 
 export default function PhonePreview({ links, profile }: ProfilePreview) {
   const fullName = `${profile.firstName} ${profile.lastName}`;
@@ -61,7 +79,7 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
               key={link.id}
               target="_blank"
               className={`w-48 p-2 rounded-lg flex justify-between items-center font-medium ${getButtonColor(
-                link.platform
+                link?.platform
               )}`}
             >
               <div className="flex gap-2 items-center">
