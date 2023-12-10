@@ -3,17 +3,44 @@
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdLock } from "react-icons/io";
 import Link from "next/link";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+import { z, ZodError } from "zod";
+import { useRouter } from "next/navigation";
+
+const registerSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(4, "Password must be at least 4 characters"),
+  confirmPassword: z.string(),
+});
+
+type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterForm() {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const router = useRouter();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirm-password");
 
-    if (password === confirmPassword) {
+    try {
+      const validatedData: RegisterFormData = registerSchema.parse({
+        email,
+        password,
+        confirmPassword,
+      });
+
+      if (validatedData.password !== validatedData.confirmPassword) {
+        setErrors({ confirmPassword: "Passwords don't match" });
+        return;
+      }
+
+      setErrors({});
+
       const response = await fetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({
@@ -21,8 +48,23 @@ export default function RegisterForm() {
           password,
         }),
       });
-    } else {
-      console.log("passwords don't match");
+
+      if (response.ok) {
+        const responseData = await response.json();
+        router.push("/");
+      }
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const validationErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path) {
+            validationErrors[err.path.join(".")] = err.message;
+          }
+        });
+        setErrors(validationErrors);
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   };
 
@@ -72,6 +114,9 @@ export default function RegisterForm() {
           <IoMdLock className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
         </div>
       </div>
+      {errors.password && (
+        <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+      )}
       <div className="flex flex-col">
         <label
           htmlFor="confirm-password"
@@ -91,6 +136,9 @@ export default function RegisterForm() {
           <IoMdLock className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
         </div>
       </div>
+      {errors.confirmPassword && (
+        <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+      )}
       <button className="bg-[#633CFF] text-zinc-200 py-3 rounded-lg font-semibold mt-1">
         Create new account
       </button>

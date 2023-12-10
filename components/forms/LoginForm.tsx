@@ -3,26 +3,58 @@
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdLock } from "react-icons/io";
 import Link from "next/link";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+
+export const loginSchema = z.object({
+  email: z.string().email("Invalid email address").min(1),
+  password: z.string().min(4, "Password must be at least 4 characters"),
+});
+
+export type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const router = useRouter();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-    const response = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
 
-    if (!response?.error) {
-      router.push("/profile/links");
+    try {
+      const validatedData: LoginFormData = loginSchema.parse({
+        email,
+        password,
+      });
+
+      setErrors({});
+
+      const response = await signIn("credentials", {
+        email: validatedData.email,
+        password: validatedData.password,
+        redirect: false,
+      });
+
+      if (!response?.error) {
+        router.push("/profile/links");
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const validationErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path) {
+            validationErrors[err.path.join(".")] = err.message;
+          }
+        });
+        setErrors(validationErrors);
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   };
 
@@ -53,6 +85,9 @@ export default function LoginForm() {
           <MdOutlineEmail className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
         </div>
       </div>
+      {errors.email && (
+        <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+      )}
       <div className="flex flex-col">
         <label
           htmlFor="password"
@@ -72,11 +107,14 @@ export default function LoginForm() {
           <IoMdLock className="absolute pointer-events-none bottom-[12px] left-4 text-gray-400" />
         </div>
       </div>
+      {errors.password && (
+        <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+      )}
       <button className="bg-[#633CFF] text-zinc-200 py-3 rounded-lg font-semibold mt-1">
         Log in
       </button>
       <span className="text-center text-sm mt-2">
-        {"Don't have an account?"}
+        {"Don't have an account? "}
         <Link href="/register" className="text-sky-500">
           Create account
         </Link>
