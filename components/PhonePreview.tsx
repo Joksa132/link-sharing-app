@@ -8,25 +8,7 @@ import {
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
 import { getButtonIcon } from "@/utils/getButtonIcon";
-
-const getButtonColor = (platform: string) => {
-  switch (platform.toLowerCase()) {
-    case "github":
-      return "bg-black text-white";
-    case "youtube":
-      return "bg-red-500 text-white";
-    case "linkedin":
-      return "bg-blue-600 text-white";
-    case "twitter":
-      return "bg-sky-400 text-white";
-    case "facebook":
-      return "bg-blue-400 text-white";
-    case "instagram":
-      return "bg-violet-500 text-white";
-    default:
-      return "bg-gray-500 text-white";
-  }
-};
+import { getButtonColor } from "@/utils/getButtonColor";
 
 export default function PhonePreview({ links, profile }: ProfilePreview) {
   const fullName = `${profile.firstName} ${profile.lastName}`;
@@ -61,7 +43,7 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
           <AvatarSkeleton />
         )}
         {fullName.trim() ? (
-          <span className="text-xl font-semibold mt-2">{fullName}</span>
+          <span className="text-xl font-bold mt-2">{fullName}</span>
         ) : (
           <NameSkeleton />
         )}
