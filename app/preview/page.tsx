@@ -12,12 +12,32 @@ import { getButtonIcon } from "@/utils/getButtonIcon";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
-import { enqueueSnackbar } from "notistack";
-import { getButtonColor } from "@/utils/getButtonColor";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import { useSession } from "next-auth/react";
+
+export const getButtonColor = (platform: string) => {
+  switch (platform.toLowerCase()) {
+    case "github":
+      return `bg-black text-white`;
+    case "youtube":
+      return "bg-red-500 text-white";
+    case "linkedin":
+      return "bg-blue-600 text-white";
+    case "twitter":
+      return "bg-sky-400 text-white";
+    case "facebook":
+      return "bg-blue-400 text-white";
+    case "instagram":
+      return "bg-violet-500 text-white";
+    default:
+      return "bg-gray-500 text-white";
+  }
+};
 
 export default function Preview() {
   const { links, profileDetails } = useContext(ProfileContext);
   const fullName = `${profileDetails.firstName} ${profileDetails.lastName}`;
+  const { data: session } = useSession();
 
   const handleSavePage = async () => {
     try {
@@ -26,12 +46,15 @@ export default function Preview() {
         body: JSON.stringify({
           links,
           profileDetails,
+          session,
         }),
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        enqueueSnackbar("Successfully saved this page", { variant: "success" });
+        enqueueSnackbar("Successfully saved this page to database", {
+          variant: "success",
+        });
       }
     } catch (error) {
       console.log(error);
@@ -86,7 +109,7 @@ export default function Preview() {
                 key={link.id}
                 target="_blank"
                 className={`w-48 p-2 rounded-lg flex justify-between items-center font-medium ${getButtonColor(
-                  link?.platform
+                  link.platform
                 )}`}
               >
                 <div className="flex gap-2 items-center">
@@ -101,6 +124,7 @@ export default function Preview() {
           )}
         </div>
       </div>
+      <SnackbarProvider />
     </div>
   );
 }
