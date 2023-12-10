@@ -66,14 +66,14 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
           <NameSkeleton />
         )}
         {profile.email ? (
-          <span className="text-sm font-medium opacity-50 mb-6">
+          <span className="text-sm font-medium opacity-50 mb-4">
             {profile.email}
           </span>
         ) : (
           <EmailSkeleton />
         )}
         {links[0] && links[0].url ? (
-          links.map((link) => (
+          links.slice(0, 8).map((link) => (
             <a
               href={`//${link.url}`}
               key={link.id}
