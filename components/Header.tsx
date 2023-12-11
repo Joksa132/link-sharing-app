@@ -3,7 +3,7 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaLink, FaRegUserCircle } from "react-icons/fa";
+import { FaLink, FaRegUserCircle, FaList } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 
 export default function Header() {
@@ -38,6 +38,16 @@ export default function Header() {
           }`}
         >
           <FaRegUserCircle /> Profile Details
+        </Link>
+        <Link
+          href="/profile/pages"
+          className={`flex items-center gap-2 py-2 px-6 text-gray-600 font-semibold hover:text-violet-500 ${
+            pathName === "/profile/pages"
+              ? "text-violet-500 bg-violet-300 bg-opacity-30 rounded-lg"
+              : ""
+          }`}
+        >
+          <FaList /> Saved Pages
         </Link>
       </div>
       <Link
