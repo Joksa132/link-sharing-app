@@ -2,22 +2,27 @@ import { getButtonIcon } from "@/utils/getButtonIcon";
 import { sql } from "@vercel/postgres";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
+import { notFound } from "next/navigation";
 
 async function fetchPage(pageId: number) {
   const page = await sql`SELECT * FROM page WHERE id = ${pageId}`;
-  const links = await sql`SELECT * FROM links WHERE page_id = ${pageId}`;
 
-  const combined = {
-    id: page.rows[0].id,
-    userId: page.rows[0].user_id,
-    firstName: page.rows[0].first_name,
-    lastName: page.rows[0].last_name,
-    email: page.rows[0].email,
-    avatar: page.rows[0].avatar,
-    links: links.rows,
-  };
+  if (page.rows[0]) {
+    const links = await sql`SELECT * FROM links WHERE page_id = ${pageId}`;
+    const combined = {
+      id: page.rows[0].id,
+      userId: page.rows[0].user_id,
+      firstName: page.rows[0].first_name,
+      lastName: page.rows[0].last_name,
+      email: page.rows[0].email,
+      avatar: page.rows[0].avatar,
+      links: links.rows,
+    };
 
-  return combined;
+    return combined;
+  }
+
+  return null;
 }
 
 const getButtonColor = (platform: string) => {
@@ -41,7 +46,12 @@ const getButtonColor = (platform: string) => {
 
 export default async function Page({ params }: { params: { page: number } }) {
   const page = await fetchPage(params.page);
-  const fullName = `${page.firstName} ${page.lastName}`;
+  let fullName = "";
+  if (page) {
+    fullName = `${page.firstName} ${page.lastName}`;
+  } else {
+    notFound();
+  }
 
   return (
     <div className="h-screen w-screen relative">
