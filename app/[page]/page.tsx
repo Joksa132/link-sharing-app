@@ -20,7 +20,7 @@ async function fetchPage(pageId: number) {
   return combined;
 }
 
-export const getButtonColor = (platform: string) => {
+const getButtonColor = (platform: string) => {
   switch (platform.toLowerCase()) {
     case "github":
       return `bg-black text-white`;

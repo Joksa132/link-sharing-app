@@ -9,7 +9,7 @@ import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
 import { getButtonIcon } from "@/utils/getButtonIcon";
 
-export const getButtonColor = (platform: string) => {
+const getButtonColor = (platform: string) => {
   switch (platform.toLowerCase()) {
     case "github":
       return `bg-black text-white`;

@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 
-export const getButtonColor = (platform: string) => {
+const getButtonColor = (platform: string) => {
   switch (platform.toLowerCase()) {
     case "github":
       return `bg-black text-white`;
