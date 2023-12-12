@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       `;
     }
 
-    return NextResponse.json({ message: "success" });
+    return NextResponse.json({ message: "success", pageId });
   } catch (error) {
     console.log(error);
   }
