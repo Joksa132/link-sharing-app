@@ -11,7 +11,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { getButtonIcon } from "@/utils/getButtonIcon";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 
@@ -38,6 +38,8 @@ export default function Preview() {
   const { links, profileDetails } = useContext(ProfileContext);
   const fullName = `${profileDetails.firstName} ${profileDetails.lastName}`;
   const { data: session } = useSession();
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [pageId, setPageId] = useState<string>("");
 
   const handleSavePage = async () => {
     try {
@@ -52,9 +54,11 @@ export default function Preview() {
 
       if (response.ok) {
         const responseData = await response.json();
+        setPageId(responseData.pageId.toString());
         enqueueSnackbar("Successfully saved this page to database", {
           variant: "success",
         });
+        setIsSaved(true);
       }
     } catch (error) {
       console.log(error);
@@ -71,12 +75,41 @@ export default function Preview() {
           >
             Back to Editor
           </Link>
-          <button
-            onClick={handleSavePage}
-            className="bg-violet-500 py-2 px-6 text-white rounded-lg font-semibold"
-          >
-            Save Page
-          </button>
+          {isSaved ? (
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${window.location.origin}/${pageId}`
+                );
+                enqueueSnackbar("Copied the page url!", {
+                  variant: "success",
+                });
+              }}
+              className="bg-violet-500 py-2 px-6 text-white rounded-lg font-semibold"
+            >
+              Copy Link
+            </button>
+          ) : (
+            <button
+              onClick={handleSavePage}
+              className={`py-2 px-6 text-white rounded-lg font-semibold ${
+                profileDetails.firstName === "" ||
+                profileDetails.lastName === "" ||
+                (links.length === 1 &&
+                  (links[0].platform === "" || links[0].url === ""))
+                  ? "bg-gray-400"
+                  : "bg-violet-500"
+              }`}
+              disabled={
+                profileDetails.firstName === "" ||
+                profileDetails.lastName === "" ||
+                (links.length === 1 &&
+                  (links[0].platform === "" || links[0].url === ""))
+              }
+            >
+              Save Page
+            </button>
+          )}
         </header>
       </div>
       <div className="flex items-center justify-center relative">
