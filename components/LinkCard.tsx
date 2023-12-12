@@ -21,11 +21,14 @@ export default function LinkCard({
   const linkIndex = links.findIndex((link) => link.id === linkId);
 
   const handlePlatformChange = (e: React.FormEvent<HTMLSelectElement>) => {
-    if (linkIndex !== -1) {
-      const updatedLinks = [...links];
-      updatedLinks[linkIndex].platform = (e.target as HTMLSelectElement).value;
+    const selectedPlatform = (e.target as HTMLSelectElement).value;
 
-      setLinks(updatedLinks);
+    if (selectedPlatform !== "") {
+      if (linkIndex !== -1) {
+        const updatedLinks = [...links];
+        updatedLinks[linkIndex].platform = selectedPlatform;
+        setLinks(updatedLinks);
+      }
     }
   };
 
@@ -67,8 +70,11 @@ export default function LinkCard({
           onChange={handlePlatformChange}
           className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
           value={links[linkIndex].platform}
+          required
         >
-          <option value="">Select a platform</option>
+          <option value="" hidden>
+            Select a platform
+          </option>
           <option value="GitHub">GitHub</option>
           <option value="YouTube">YouTube</option>
           <option value="Linkedin">Linkedin</option>
