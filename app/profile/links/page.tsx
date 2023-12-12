@@ -43,12 +43,6 @@ export default function ProfileLinks() {
             ))}
           </div>
         </div>
-        <div className="h-[1.5px] w-full bg-gray-300 bg-opacity-60"></div>
-        <div className="flex justify-end px-8 py-6">
-          <button className="bg-[#633BFE] text-zinc-200 py-3 px-7 rounded-lg font-semibold">
-            Save
-          </button>
-        </div>
       </section>
     </main>
   );
