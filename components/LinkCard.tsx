@@ -44,14 +44,18 @@ export default function LinkCard({
   return (
     <div className="bg-[#FAFAFA] p-4 flex flex-col gap-3 rounded-lg">
       <div className="flex justify-between ">
-        <div className="flex gap-1 items-center">
-          <HiOutlineMenuAlt4 className="text-gray-500" />
+        <div className="flex gap-1 items-center max-sm:text-xs">
+          <HiOutlineMenuAlt4 className="text-gray-500 max-sm:hidden" />
+          <HiOutlineMenuAlt4
+            size={10}
+            className="text-gray-500 hidden max-sm:block"
+          />
           <span className="font-semibold text-gray-500">
             Link #{linkNumber}
           </span>
         </div>
         <button
-          className="font-medium text-gray-500 text-opacity-80"
+          className="font-medium text-gray-500 text-opacity-80 max-sm:text-xs"
           onClick={handleRemoveLink}
         >
           Remove
@@ -68,7 +72,7 @@ export default function LinkCard({
           name="platform"
           id={`select-${id}`}
           onChange={handlePlatformChange}
-          className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
+          className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full max-sm:px-2 max-sm:text-xs"
           value={links[linkIndex].platform}
           required
         >
@@ -95,14 +99,18 @@ export default function LinkCard({
             type="text"
             name="link-url"
             id={`input-${id}`}
-            className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full"
+            className="py-2 px-12 border border-gray-400 rounded-lg outline-none border-opacity-60 w-full max-sm:text-xs max-sm:px-8"
             onChange={handleUrlChange}
             value={links[linkIndex].url}
             required
           />
           <FaLink
             size={14}
-            className="absolute pointer-events-none bottom-[14px] left-5 text-gray-400"
+            className="max-sm:hidden absolute pointer-events-none bottom-[14px] left-5 text-gray-400"
+          />
+          <FaLink
+            size={10}
+            className="hidden max-sm:block absolute pointer-events-none bottom-[12px] left-3 text-gray-400"
           />
         </div>
       </div>

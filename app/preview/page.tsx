@@ -67,11 +67,11 @@ export default function Preview() {
 
   return (
     <div className="h-screen w-screen relative">
-      <div className="h-80 bg-violet-600 rounded-b-3xl p-4">
+      <div className="h-80 bg-violet-600 rounded-b-3xl p-4 max-sm:bg-inherit max-sm:h-48">
         <header className="bg-white p-4 flex justify-between items-center rounded-lg">
           <Link
             href={"/profile/links"}
-            className="border-[2px] border-violet-500 py-2 px-6 rounded-lg text-violet-500 font-semibold"
+            className="border-[2px] border-violet-500 py-2 px-6 rounded-lg text-violet-500 font-semibold max-sm:p-2 max-sm:text-sm"
           >
             Back to Editor
           </Link>
@@ -85,14 +85,14 @@ export default function Preview() {
                   variant: "success",
                 });
               }}
-              className="bg-violet-500 py-2 px-6 text-white rounded-lg font-semibold"
+              className="bg-violet-500 py-2 px-6 text-white rounded-lg font-semibold max-sm:p-2 max-sm:text-sm"
             >
               Copy Link
             </button>
           ) : (
             <button
               onClick={handleSavePage}
-              className={`py-2 px-6 text-white rounded-lg font-semibold ${
+              className={`py-2 px-6 text-white rounded-lg font-semibold max-sm:p-2 max-sm:text-sm ${
                 profileDetails.firstName === "" ||
                 profileDetails.lastName === "" ||
                 links.some((link) => link.platform === "" || link.url === "")
@@ -111,7 +111,7 @@ export default function Preview() {
         </header>
       </div>
       <div className="flex items-center justify-center relative">
-        <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center">
+        <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center max-sm:bg-inherit max-sm:shadow-none max-w-sm">
           {profileDetails.avatar ? (
             <Image
               className="h-20 w-20 rounded-full"
@@ -122,12 +122,14 @@ export default function Preview() {
             <AvatarSkeleton />
           )}
           {fullName.trim() ? (
-            <span className="text-2xl font-bold mt-2">{fullName}</span>
+            <span className="text-2xl font-bold mt-2 break-all text-center">
+              {fullName}
+            </span>
           ) : (
             <NameSkeleton />
           )}
           {profileDetails.email ? (
-            <span className="text-sm font-medium opacity-50 mb-4">
+            <span className="text-sm font-medium opacity-50 mb-4 break-all text-center">
               {profileDetails.email}
             </span>
           ) : (

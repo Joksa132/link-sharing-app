@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
 import { notFound } from "next/navigation";
 
-async function fetchPage(pageId: number) {
+async function fetchPage(pageId: string) {
   const page = await sql`SELECT * FROM page WHERE id = ${pageId}`;
 
   if (page.rows[0]) {
@@ -44,7 +44,7 @@ const getButtonColor = (platform: string) => {
   }
 };
 
-export default async function Page({ params }: { params: { page: number } }) {
+export default async function Page({ params }: { params: { page: string } }) {
   const page = await fetchPage(params.page);
   let fullName = "";
   if (page) {
@@ -55,16 +55,18 @@ export default async function Page({ params }: { params: { page: number } }) {
 
   return (
     <div className="h-screen w-screen relative">
-      <div className="h-80 bg-violet-600 rounded-b-3xl"></div>
-      <main className="flex items-center justify-center relative">
-        <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center">
+      <div className="h-80 bg-violet-600 rounded-b-3xl max-sm:bg-inherit max-sm:h-0"></div>
+      <main className="flex items-center justify-center relative max-sm:mt-12">
+        <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center max-sm:bg-inherit max-sm:shadow-none max-w-sm">
           <Image
             className="h-20 w-20 rounded-full"
             src={page.avatar}
             alt="User's avatar"
           />
-          <span className="text-2xl font-bold mt-2">{fullName}</span>
-          <span className="text-sm font-medium opacity-50 mb-4">
+          <span className="text-2xl font-bold mt-2 break-all text-center">
+            {fullName}
+          </span>
+          <span className="text-sm font-medium opacity-50 mb-4 break-all text-center">
             {page.email}
           </span>
           {page.links.map((link) => (

@@ -61,37 +61,45 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
           <AvatarSkeleton />
         )}
         {fullName.trim() ? (
-          <span className="text-xl font-bold mt-2">{fullName}</span>
+          <span className="text-xl font-bold mt-2 w-64 text-center break-words">
+            {fullName}
+          </span>
         ) : (
           <NameSkeleton />
         )}
         {profile.email ? (
-          <span className="text-sm font-medium opacity-50 mb-4">
+          <span className="text-sm font-medium opacity-50 w-64 text-center mb-4 break-all">
             {profile.email}
           </span>
         ) : (
           <EmailSkeleton />
         )}
-        {links[0] && links[0].url ? (
-          links.slice(0, 8).map((link) => (
-            <a
-              href={`//${link.url}`}
-              key={link.id}
-              target="_blank"
-              className={`w-48 p-2 rounded-lg flex justify-between items-center font-medium ${getButtonColor(
-                link.platform
-              )}`}
-            >
-              <div className="flex gap-2 items-center">
-                {getButtonIcon(link.platform)}
-                {link.platform}
-              </div>
-              <FaArrowRight />
-            </a>
-          ))
-        ) : (
-          <LinkSkeleton />
-        )}
+        <div
+          className={`w-64 ${
+            fullName === " " ? "h-80" : "h-64"
+          } overflow-y-auto flex flex-col gap-2 items-center`}
+        >
+          {links[0] && links[0].url ? (
+            links.map((link) => (
+              <a
+                href={`//${link.url}`}
+                key={link.id}
+                target="_blank"
+                className={`w-48 p-2 rounded-lg flex justify-between items-center font-medium ${getButtonColor(
+                  link.platform
+                )}`}
+              >
+                <div className="flex gap-2 items-center">
+                  {getButtonIcon(link.platform)}
+                  {link.platform}
+                </div>
+                <FaArrowRight />
+              </a>
+            ))
+          ) : (
+            <LinkSkeleton />
+          )}
+        </div>
       </div>
     </div>
   );

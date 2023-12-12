@@ -23,7 +23,7 @@ export default async function SavedPages() {
   const pages = await fetchPages(session?.user?.email as string);
 
   return (
-    <main className="p-10 grid grid-cols-4 gap-8">
+    <main className="p-10 grid grid-cols-4 max-xl:grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       {pages.map((page, index) => (
         <PageCard page={page} index={index} key={page.id} />
       ))}
