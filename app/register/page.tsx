@@ -9,8 +9,7 @@ export default async function Register() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen w-screen">
-      <div>logo</div>
+    <div className="flex justify-center items-center h-screen w-screen">
       <RegisterForm />
     </div>
   );
