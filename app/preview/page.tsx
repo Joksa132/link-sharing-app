@@ -95,16 +95,14 @@ export default function Preview() {
               className={`py-2 px-6 text-white rounded-lg font-semibold ${
                 profileDetails.firstName === "" ||
                 profileDetails.lastName === "" ||
-                (links.length === 1 &&
-                  (links[0].platform === "" || links[0].url === ""))
+                links.some((link) => link.platform === "" || link.url === "")
                   ? "bg-gray-400"
                   : "bg-violet-500"
               }`}
               disabled={
                 profileDetails.firstName === "" ||
                 profileDetails.lastName === "" ||
-                (links.length === 1 &&
-                  (links[0].platform === "" || links[0].url === ""))
+                links.some((link) => link.platform === "" || link.url === "")
               }
             >
               Save Page
