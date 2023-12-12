@@ -9,8 +9,6 @@ export default function ProfileDetails() {
   const { links, profileDetails, setProfileDetails } =
     useContext(ProfileContext);
 
-  const handleSubmit = () => {};
-
   return (
     <main className="grid grid-cols-links gap-5 py-5">
       <section className="bg-white rounded-lg h-full flex justify-center items-center p-6">
@@ -21,10 +19,7 @@ export default function ProfileDetails() {
         <span className="text-sm font-medium opacity-50">
           Add your details to create a personal touch to your profile.
         </span>
-        <form
-          className="flex flex-col gap-4 bg-[#FAFAFA] px-4 py-6 rounded-lg"
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col gap-4 bg-[#FAFAFA] px-4 py-6 rounded-lg">
           <div className="flex items-center justify-between">
             <label
               htmlFor="first-name"
@@ -45,6 +40,7 @@ export default function ProfileDetails() {
                   firstName: e.target.value,
                 })
               }
+              maxLength={40}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -67,6 +63,7 @@ export default function ProfileDetails() {
                   lastName: e.target.value,
                 })
               }
+              maxLength={40}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -85,6 +82,7 @@ export default function ProfileDetails() {
               onChange={(e) =>
                 setProfileDetails({ ...profileDetails, email: e.target.value })
               }
+              maxLength={50}
             />
           </div>
         </form>
