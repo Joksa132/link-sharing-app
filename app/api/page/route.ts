@@ -5,9 +5,7 @@ export async function POST(request: Request) {
   try {
     const { links, profileDetails, session } = await request.json();
 
-    const userIdRes =
-      await sql`SELECT id FROM users WHERE email = ${session.user.email}`;
-    const userId = userIdRes.rows[0]?.id;
+    const userId = session.user.id ?? parseInt(session.user.sub);
 
     const pageRes = await sql`
       INSERT INTO page (user_id, first_name, last_name, email, avatar)
@@ -27,5 +25,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "success", pageId });
   } catch (error) {
     console.log(error);
+    return NextResponse.json({ message: error });
   }
 }
