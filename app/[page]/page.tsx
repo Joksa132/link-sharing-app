@@ -57,12 +57,18 @@ export default async function Page({ params }: { params: { page: string } }) {
     <div className="h-screen w-screen relative">
       <div className="h-80 bg-violet-600 rounded-b-3xl max-sm:bg-inherit max-sm:h-0"></div>
       <main className="flex items-center justify-center relative max-sm:mt-12">
-        <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center max-sm:bg-inherit max-sm:shadow-none max-w-sm">
-          <Image
-            className="h-20 w-20 rounded-full"
-            src={page.avatar}
-            alt="User's avatar"
-          />
+        <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center max-sm:bg-inherit max-sm:shadow-none max-w-sm max-sm:top-0">
+          <div className="h-20 w-20 rounded-full relative">
+            <Image
+              className="h-20 w-20 rounded-full"
+              src={page.avatar}
+              alt="User's avatar"
+              fill
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </div>
           <span className="text-2xl font-bold mt-2 break-all text-center">
             {fullName}
           </span>

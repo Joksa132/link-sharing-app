@@ -42,6 +42,9 @@ export default function Preview() {
   const [pageId, setPageId] = useState<string>("");
 
   const handleSavePage = async () => {
+    enqueueSnackbar("Saving this page to database. Please wait!", {
+      variant: "info",
+    });
     try {
       const response = await fetch("/api/page", {
         method: "POST",
@@ -113,11 +116,17 @@ export default function Preview() {
       <div className="flex items-center justify-center relative">
         <div className="bg-white shadow-md absolute rounded-3xl flex flex-col gap-2 py-6 px-10 -top-28 items-center max-sm:bg-inherit max-sm:shadow-none max-w-sm">
           {profileDetails.avatar ? (
-            <Image
-              className="h-20 w-20 rounded-full"
-              src={profileDetails.avatar}
-              alt="User's avatar"
-            />
+            <div className="h-20 w-20 rounded-full relative">
+              <Image
+                className="h-20 w-20 rounded-full"
+                src={profileDetails.avatar}
+                alt="User's avatar"
+                fill
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </div>
           ) : (
             <AvatarSkeleton />
           )}

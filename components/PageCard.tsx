@@ -25,11 +25,17 @@ export default function PageCard({ page, index }: Props) {
       >
         Page #{index + 1}
       </Link>
-      <Image
-        className="h-20 w-20 rounded-full"
-        src={page.avatar}
-        alt="User's avatar"
-      />
+      <div className="h-20 w-20 rounded-full relative">
+        <Image
+          className="h-20 w-20 rounded-full"
+          src={page.avatar}
+          alt="User's avatar"
+          fill
+          style={{
+            objectFit: "cover",
+          }}
+        />
+      </div>
       <span className="text-xl font-bold max-lg:text-sm text-center break-all">
         {fullName}
       </span>

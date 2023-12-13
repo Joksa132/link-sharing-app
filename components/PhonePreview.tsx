@@ -52,11 +52,17 @@ export default function PhonePreview({ links, profile }: ProfilePreview) {
       </svg>
       <div className="absolute top-14 flex flex-col items-center gap-2">
         {profile.avatar ? (
-          <Image
-            className="h-20 w-20 rounded-full"
-            src={profile.avatar}
-            alt="User's avatar"
-          />
+          <div className="h-20 w-20 rounded-full relative">
+            <Image
+              className="h-20 w-20 rounded-full"
+              src={profile.avatar}
+              alt="User's avatar"
+              fill
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </div>
         ) : (
           <AvatarSkeleton />
         )}
