@@ -1,8 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 type Page = {
-  id: number;
+  id: string;
   avatar: string;
   firstName: string;
   lastName: string;
@@ -12,9 +14,10 @@ type Page = {
 type Props = {
   page: Page;
   index: number;
+  deletePage: (id: string) => void;
 };
 
-export default function PageCard({ page, index }: Props) {
+export default function PageCard({ page, index, deletePage }: Props) {
   const fullName = `${page.firstName} ${page.lastName}`;
 
   return (
@@ -42,6 +45,12 @@ export default function PageCard({ page, index }: Props) {
       <span className="text-sm font-medium opacity-50 max-lg:text-xs break-all">
         {page.email}
       </span>
+      <button
+        className="border-[2px] border-violet-500 p-1 max-md:text-xs max-sm:py-1 max-sm:px-2 rounded-lg text-violet-500 font-semibold"
+        onClick={() => deletePage(page.id)}
+      >
+        Delete Page
+      </button>
     </div>
   );
 }
