@@ -4,6 +4,8 @@ import PhonePreview from "@/components/PhonePreview";
 import { ProfileContext } from "@/components/context/ProfileContext";
 import { ProfileDetails } from "@/lib/types";
 import { useContext } from "react";
+import { UploadButton } from "@/utils/uploadthing";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 export default function ProfileDetails() {
   const { links, profileDetails, setProfileDetails } =
@@ -19,6 +21,30 @@ export default function ProfileDetails() {
         <span className="text-sm font-medium opacity-50 max-sm:text-xs">
           Add your details to create a personal touch to your profile.
         </span>
+        <div className="bg-[#FAFAFA] flex items-center justify-between px-4 py-6 rounded-lg">
+          <span className="text-sm font-medium opacity-50 w-28 mr-20 max-sm:text-xs">
+            Profile picture
+          </span>
+          <UploadButton
+            endpoint="profilePicture"
+            onClientUploadComplete={(res) => {
+              if (res) {
+                setProfileDetails({
+                  ...profileDetails,
+                  avatar: res[0].url,
+                });
+                enqueueSnackbar("Image upload success!", {
+                  variant: "success",
+                });
+              }
+            }}
+            onUploadError={(error: Error) => {
+              enqueueSnackbar("Image upload failed!", {
+                variant: "error",
+              });
+            }}
+          />
+        </div>
         <form className="flex flex-col gap-4 bg-[#FAFAFA] px-4 py-6 rounded-lg">
           <div className="flex items-center justify-between max-sm:flex-col max-sm:items-start max-sm:gap-2">
             <label
@@ -87,6 +113,7 @@ export default function ProfileDetails() {
           </div>
         </form>
       </section>
+      <SnackbarProvider />
     </main>
   );
 }
