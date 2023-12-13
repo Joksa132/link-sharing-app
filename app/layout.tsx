@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "@uploadthing/react/styles.css";
 import { ProfileProvider } from "@/components/context/ProfileContext";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/context/SessionProvider";
